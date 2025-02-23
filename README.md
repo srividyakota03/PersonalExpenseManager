@@ -1,8 +1,21 @@
-# React + Vite
+# Personal Expense Manager  
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+The **Personal Expense Manager** is a web application built using the **MERN stack** that helps users track and manage their daily expenses efficiently. It features **user authentication, real-time expense tracking, and collaboration** for shared budgeting. Users can categorize expenses, set budgets, and visualize spending through interactive charts. With a clean and intuitive UI, this app simplifies personal finance management for individuals and groups.
 
-Currently, two official plugins are available:
+---
+This is the **frontend** structure for the **Personal Expense Manager** application, built using **React.js**. The structure is organized to ensure modularity and maintainability.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Folders & Files:
+
+- **`public/`** → Contains static files like `index.html` and favicon.
+- **`src/`** → Main source code.
+  - **`assets/`** → Stores images, icons, and styles.
+  - **`components/`** → Contains reusable UI components like `Navbar.jsx`.
+  - **`pages/`** → Main pages of the application (`Dashboard`, `LoginPage`, `SignupPage`).
+  - **`App.jsx`** → Root component of the application.
+  - **`main.jsx`** → Entry point where React renders the app.
+  - **`index.html`** → Main HTML file.
+  - **`index.css`** → Global CSS file.
+- **`.env`** → Stores environment variables.
+- **`package.json`** → Defines project dependencies and scripts.
+- **`README.md`** → Documentation file.
