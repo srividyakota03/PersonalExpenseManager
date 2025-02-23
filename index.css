@@ -1,0 +1,487 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Color Variables */
+:root {
+  --primary-bg: #FFF6E0; 
+  --secondary-bg: #E4DCCF; 
+  --card-bg: #B3C8CF; 
+  --income-color: #A8DF8E; 
+  --expense-color: #FF9B9B;
+  --savings-color: #AFCBFF; 
+  --investments-color: #FFC6AC; 
+  --text-color: #5C5470; 
+  --border-color: #D1D1D1; 
+  --button-color: #AFCBFF; 
+}
+
+/* Body Styling */
+body {
+  background-color: var(--primary-bg);
+  color: var(--text-color);
+  padding: 20px;
+}
+
+/* Navbar */
+.navbar {
+  background-color: var(--secondary-bg);
+  padding: 15px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 10px;
+}
+
+.navbar h1 {
+  font-size: 24px;
+  color: var(--text-color);
+}
+
+.navbar div a {
+  text-decoration: none;
+  margin-left: 15px;
+  color: var(--text-color);
+  font-weight: bold;
+}
+
+/* Main Container */
+.container {
+  background-color: var(--card-bg);
+  padding: 20px;
+  border-radius: 12px;
+  margin-top: 20px;
+}
+
+
+.top-section {
+  display: flex;
+  justify-content: space-between; 
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+/* Buttons */
+.button {
+  background-color: var(--button-color);
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  color: var(--text-color);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.3s ease-in-out;
+}
+
+.button:hover {
+  background-color: #89BFFF;
+}
+
+.add-new-btn {
+  margin-left: auto; 
+}
+
+/* Filter Button - Styled Like "Add New" */
+.filter-btn {
+  background-color: var(--button-color);
+  padding: 10px 18px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  color: var(--text-color);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.3s ease-in-out;
+}
+
+.filter-btn:hover {
+  background-color: #89BFFF;
+}
+
+/* Table Styling */
+.table-container {
+  background-color: var(--secondary-bg);
+  padding: 20px;
+  border-radius: 12px;
+  position: relative;
+  margin-top: 40px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+th, td {
+  padding: 10px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+th {
+  background-color: var(--primary-bg);
+}
+
+td {
+  background-color: var(--secondary-bg);
+}
+
+/* Action Buttons */
+.action-buttons button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin: 0 5px;
+  font-size: 18px;
+}
+
+.action-buttons button:hover {
+  color: var(--expense-color);
+}
+
+/*  Responsive Design */
+@media (max-width: 768px) {
+  .top-section {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .add-new-btn {
+    margin-left: 0;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .filter-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  table {
+    font-size: 14px;
+  }
+
+  th, td {
+    padding: 8px;
+  }
+}
+/* General Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Color Variables */
+:root {
+  --primary-bg: #FFF6E0; /* Warm Vanilla */
+  --secondary-bg: #E4DCCF; /* Soft Latte Beige */
+  --card-bg: #B3C8CF; /* Muted Pastel Blue */
+  --income-color: #A8DF8E; /* Minty Pastel Green */
+  --expense-color: #FF9B9B; /* Soft Baby Pink */
+  --savings-color: #AFCBFF; /* Cloudy Light Blue */
+  --investments-color: #FFC6AC; /* Pale Apricot */
+  --text-color: #5C5470; /* Dark Pastel Purple-Gray */
+  --border-color: #D1D1D1; /* Soft Silver Gray */
+  --button-color: #AFCBFF; /* Matching Savings color */
+}
+
+/* Body Styling */
+body {
+  background-color: var(--primary-bg);
+  color: var(--text-color);
+  padding: 20px;
+}
+
+/* Navbar */
+.navbar {
+  background-color: var(--secondary-bg);
+  padding: 15px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 10px;
+}
+
+.navbar h1 {
+  font-size: 24px;
+  color: var(--text-color);
+}
+
+.navbar div a {
+  text-decoration: none;
+  margin-left: 15px;
+  color: var(--text-color);
+  font-weight: bold;
+}
+
+/* Main Container */
+.container {
+  background-color: var(--card-bg);
+  padding: 20px;
+  border-radius: 12px;
+  margin-top: 20px;
+}
+
+/* Top Section (Button Alignment) */
+.top-section {
+  display: flex;
+  justify-content: space-between; /* Moves "Add New" to the right */
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+/* Buttons */
+.button {
+  background-color: var(--button-color);
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  color: var(--text-color);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.3s ease-in-out;
+}
+
+.button:hover {
+  background-color: #89BFFF;
+}
+
+/* Align "Add New" Button */
+.add-new-btn {
+  margin-left: auto;
+}
+
+/* Filter Button */
+.filter-btn {
+  background-color: var(--button-color);
+  padding: 10px 18px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  color: var(--text-color);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.3s ease-in-out;
+}
+
+.filter-btn:hover {
+  background-color: #89BFFF;
+}
+
+/* Table Styling */
+.table-container {
+  background-color: var(--secondary-bg);
+  padding: 20px;
+  border-radius: 12px;
+  position: relative;
+  margin-top: 40px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+th, td {
+  padding: 10px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+th {
+  background-color: var(--primary-bg);
+}
+
+td {
+  background-color: var(--secondary-bg);
+}
+
+/* Action Buttons */
+.action-buttons button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin: 0 5px;
+  font-size: 18px;
+}
+
+.action-buttons button:hover {
+  color: var(--expense-color);
+}
+
+/* Add New Form - Modal Centering */
+.add-new-form-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.add-new-form {
+  background: var(--primary-bg);
+  padding: 25px;
+  border-radius: 12px;
+  width: 400px;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+  text-align: center;
+}
+
+/* Close Button */
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  position: absolute;
+  top: 15px;
+  right: 15px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .top-section {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .add-new-btn {
+    margin-left: 0;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .filter-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  table {
+    font-size: 14px;
+  }
+
+  th, td {
+    padding: 8px;
+  }
+
+  /* Responsive Modal */
+  .add-new-form {
+    width: 90%;
+  }
+}
+.dashboard-container {
+  padding: 20px;
+  background: #d0dce7;
+  min-height: 100vh;
+}
+
+.top-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.button {
+  padding: 8px 15px;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  border-radius: 5px;
+}
+
+.filter-btn {
+  background: #a3b3cc;
+}
+
+.add-btn {
+  background: #6da7ff;
+}
+.close-icon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  color: red;
+  cursor: pointer;
+}
+
+.close-icon:hover {
+  color: darkred;
+}
+
+/* Form Container */
+.form-container {
+  position: relative; 
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: #f8f9fa;
+  padding: 20px;
+  border-radius: 8px;
+  width: 300px;
+  margin-top: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+
+/* Form Container */
+.form-container {
+  display: flex;
+  flex-direction: column; 
+  gap: 10px; 
+  background: #f8f9fa;
+  padding: 20px;
+  border-radius: 8px;
+  width: 300px; 
+  margin-top: 10px;
+}
+
+/* Input Fields and Dropdown */
+.form-container input,
+.form-container select {
+  width: 100%; 
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* Form Buttons */
+.form-buttons {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.add-btn {
+  background: #007bff;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.add-btn:hover {
+  background: #0056b3;
+}
