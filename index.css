@@ -485,3 +485,273 @@ td {
 .add-btn:hover {
   background: #0056b3;
 }
+/* General Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Color Variables */
+:root {
+  --primary-bg: #FFF6E0; /* Warm Vanilla */
+  --secondary-bg: #E4DCCF; /* Soft Latte Beige */
+  --card-bg: #B3C8CF; /* Muted Pastel Blue */
+  --income-color: #A8DF8E; /* Minty Pastel Green */
+  --expense-color: #FF9B9B; /* Soft Baby Pink */
+  --savings-color: #AFCBFF; /* Cloudy Light Blue */
+  --investments-color: #FFC6AC; /* Pale Apricot */
+  --text-color: #5C5470; /* Dark Pastel Purple-Gray */
+  --border-color: #D1D1D1; /* Soft Silver Gray */
+  --button-color: #AFCBFF; /* Matching Savings color */
+}
+
+/* Body Styling */
+body {
+  background-color: var(--primary-bg);
+  color: var(--text-color);
+  padding: 20px;
+}
+
+/* Navbar */
+.navbar {
+  background-color: var(--secondary-bg);
+  padding: 15px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 10px;
+}
+
+.navbar h2 {
+  font-size: 24px;
+  color: var(--text-color);
+}
+
+.navbar .nav-links {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.navbar a {
+  text-decoration: none;
+  color: var(--text-color);
+  font-weight: bold;
+  transition: color 0.3s ease-in-out;
+}
+
+.navbar a:hover {
+  color: var(--button-color);
+}
+
+.username {
+  font-weight: bold;
+  color: var(--text-color);
+}
+
+/* Logout Button */
+.logout-btn {
+  background-color: var(--expense-color);
+  border: none;
+  padding: 8px 14px;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.3s ease-in-out;
+}
+
+.logout-btn:hover {
+  background-color: #ff6b6b;
+}
+
+/* Main Container */
+.container {
+  background-color: var(--card-bg);
+  padding: 20px;
+  border-radius: 12px;
+  margin-top: 20px;
+}
+
+/* Top Section */
+.top-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+/* Buttons */
+.button {
+  background-color: var(--button-color);
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  color: var(--text-color);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.3s ease-in-out;
+}
+
+.button:hover {
+  background-color: #89BFFF;
+}
+
+.add-new-btn {
+  margin-left: auto;
+}
+
+/* Filter Button */
+.filter-btn {
+  background-color: var(--button-color);
+  padding: 10px 18px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  color: var(--text-color);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.3s ease-in-out;
+}
+
+.filter-btn:hover {
+  background-color: #89BFFF;
+}
+
+/* Table Styling */
+.table-container {
+  background-color: var(--secondary-bg);
+  padding: 20px;
+  border-radius: 12px;
+  position: relative;
+  margin-top: 40px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+th, td {
+  padding: 10px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+th {
+  background-color: var(--primary-bg);
+}
+
+td {
+  background-color: var(--secondary-bg);
+}
+
+/* Action Buttons */
+.action-buttons button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin: 0 5px;
+  font-size: 18px;
+}
+
+.action-buttons button:hover {
+  color: var(--expense-color);
+}
+
+/* Authentication Pages (Login & Signup) */
+.auth-container {
+  background-color: var(--card-bg);
+  padding: 40px;
+  width: 350px;
+  border-radius: 12px;
+  margin: 50px auto;
+  text-align: center;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.auth-container h2 {
+  margin-bottom: 15px;
+  color: var(--text-color);
+}
+
+.auth-container input {
+  display: block;
+  margin: 10px auto;
+  padding: 12px;
+  width: 85%;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  background: var(--primary-bg);
+  color: var(--text-color);
+  transition: all 0.3s ease-in-out;
+}
+
+.auth-container input:focus {
+  border-color: var(--button-color);
+  outline: none;
+}
+
+.auth-container button {
+  background-color: var(--income-color);
+  border: none;
+  padding: 12px 20px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: all 0.3s ease-in-out;
+  margin-top: 10px;
+}
+
+.auth-container button:hover {
+  background-color: #89df76;
+}
+
+.auth-container .link {
+  color: var(--text-color);
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.auth-container .link:hover {
+  color: var(--investments-color);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .top-section {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .add-new-btn {
+    margin-left: 0;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .filter-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  table {
+    font-size: 14px;
+  }
+
+  th, td {
+    padding: 8px;
+  }
+
+  .auth-container {
+    width: 90%;
+  }
+}
