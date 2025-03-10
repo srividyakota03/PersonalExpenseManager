@@ -7,15 +7,35 @@ This is the **frontend** structure for the **Personal Expense Manager** applicat
 
 ### Folders & Files:
 
-- **`public/`** → Contains static files like `index.html` and favicon.
+### Backend (`backend/`)
+- **`middleware/`** → Contains authentication middleware.
+- **`models/`** → Defines database schemas (`Transaction.js`, `User.js`).
+- **`routes/`** → Handles API endpoints (`transactionRoutes.js`, `userRoutes.js`).
+- **`utils/`** → Utility functions (e.g., `generateToken.js`).
+- **`server.js`** → Main backend server file.
+- **`.env`** → Stores environment variables.
+- **`package.json`** → Backend dependencies and scripts.
+
+### Frontend (`frontend/`)
+- **`public/`** → Contains static files like `index.html`.
 - **`src/`** → Main source code.
   - **`assets/`** → Stores images, icons, and styles.
-  - **`components/`** → Contains reusable UI components like `Navbar.jsx`.
-  - **`pages/`** → Main pages of the application (`Dashboard`, `LoginPage`, `SignupPage`).
-  - **`App.jsx`** → Root component of the application.
+  - **`components/`** → Reusable UI components (`Navbar.jsx`, `Footer.jsx`).
+  - **`pages/`** → Main pages (`Dashboard.jsx`, `LoginPage.jsx`, `SignupPage.jsx`).
+  - **`App.jsx`** → Root component of the React application.
   - **`main.jsx`** → Entry point where React renders the app.
-  - **`index.html`** → Main HTML file.
   - **`index.css`** → Global CSS file.
-- **`.env`** → Stores environment variables.
-- **`package.json`** → Defines project dependencies and scripts.
+- **`.gitignore`** → Specifies files to ignore in Git.
+- **`package.json`** → Defines frontend dependencies and scripts.
 - **`README.md`** → Documentation file.
+---
+### Features
+- User Authentication (Signup/Login with JWT)
+- Add, Edit & Delete Transactions
+- Expense & Income Categories
+- Charts for Financial Analysis
+- Dark Mode (Coming Soon!)
+
+---
+### This project is licensed under the MIT License ⚖.
+
