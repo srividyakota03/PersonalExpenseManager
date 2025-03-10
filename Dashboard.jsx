@@ -1,147 +1,251 @@
-import React, { useState } from "react";
-import { FaPlus, FaFilter, FaEdit, FaTrash, FaTimes } from "react-icons/fa";
+import React, { useState, useEffect } from "react";
+import { FaPlus, FaFilter, FaChartLine } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
+import Filters from "./Filters";
+import TransactionForm from "./TransactionForm";
+import TransactionsTable from "./TransactionsTable";
 
 const Dashboard = () => {
+  const navigate = useNavigate();
   const [showFilters, setShowFilters] = useState(false);
   const [showForm, setShowForm] = useState(false);
-  const [transactions, setTransactions] = useState([
-    { id: 1, date: "2025-02-20", title: "Lunch", amount: "$15", type: "Expense", category: "Food" },
-  ]);
-  const [newTransaction, setNewTransaction] = useState({ date: "", title: "", amount: "", type: "Expense", category: "" });
-  const [editingIndex, setEditingIndex] = useState(null);
+  const [transactions, setTransactions] = useState([]);
+  const [editingTransaction, setEditingTransaction] = useState(null);
+  const [filters, setFilters] = useState({ frequency: "7", type: "All" });
 
-  const toggleFilters = () => setShowFilters(!showFilters);
+  
+  const storedUser = localStorage.getItem("user");
+  const user = storedUser ? JSON.parse(storedUser) : null;
 
-  const toggleForm = (index = null) => {
-    if (index !== null) {
-      setEditingIndex(index);
-      setNewTransaction(transactions[index]);
-      setShowForm(true);
-    } else {
-      setShowForm(!showForm);
-      if (!showForm) {
-        setEditingIndex(null);
-        setNewTransaction({ date: "", title: "", amount: "", type: "Expense", category: "" });
+  
+  useEffect(() => {
+    if (!user || !user.token) {
+      console.error("No user token found. Redirecting to login...");
+      navigate("/login");
+      return;
+    }
+
+    console.log("Fetching transactions...");
+    fetchTransactions();
+  }, []); 
+
+  const fetchTransactions = async () => {
+    if (!user || !user.token) return;
+
+    try {
+      console.log("Using token for API request:", user.token);
+
+      const response = await fetch("http://localhost:5000/api/transactions", {
+        method: "GET",
+        headers: {
+          "Authorization": `Bearer ${user.token}`,
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
       }
+
+      const data = await response.json();
+      setTransactions(data);
+    } catch (error) {
+      console.error("Error fetching transactions:", error);
+      setTransactions([]); 
     }
   };
 
-  const handleInputChange = (e) => {
-    setNewTransaction({ ...newTransaction, [e.target.name]: e.target.value });
+  const handleAddOrUpdateTransaction = async (transaction) => {
+    if (!user || !user.token) {
+      console.error("No user token found when adding/updating transaction");
+      navigate("/login");
+      return;
+    }
+
+    
+    const transactionData = {
+      ...transaction,
+      amount: Number(transaction.amount),
+    };
+  <button onClick={handleResetFilters} style={resetButtonStyle}>
+  <FaRedo /> Reset Filters
+  </button>
+  const handleResetFilters = () => {
+    setFilters({ frequency: "7", type: "All" }); 
+    setFilteredTransactions(transactions); 
   };
 
-  const handleAddTransaction = () => {
-    if (newTransaction.title && newTransaction.amount) {
-      if (editingIndex !== null) {
-        const updatedTransactions = [...transactions];
-        updatedTransactions[editingIndex] = newTransaction;
-        setTransactions(updatedTransactions);
-      } else {
-        setTransactions([...transactions, { ...newTransaction, id: transactions.length + 1 }]);
+    try {
+      console.log(" Sending transaction data:", transactionData);
+
+      const response = await fetch(
+        transaction._id
+          ? `http://localhost:5000/api/transactions/${transaction._id}`
+          : "http://localhost:5000/api/transactions",
+        {
+          method: transaction._id ? "PUT" : "POST", 
+          headers: {
+            "Authorization": `Bearer ${user.token}`,
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+          body: JSON.stringify(transactionData),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
       }
+
+      await fetchTransactions(); 
       setShowForm(false);
-      setEditingIndex(null);
-      setNewTransaction({ date: "", title: "", amount: "", type: "Expense", category: "" });
+      setEditingTransaction(null); 
+    } catch (error) {
+      console.error("Error adding/updating transaction:", error);
     }
   };
 
-  const handleDeleteTransaction = (index) => {
-    setTransactions(transactions.filter((_, i) => i !== index));
+ 
+  const handleDeleteTransaction = async (transactionId) => {
+    if (!user || !user.token) {
+      console.error("No user token found when deleting transaction");
+      navigate("/login");
+      return;
+    }
+
+    try {
+      const response = await fetch(`http://localhost:5000/api/transactions/${transactionId}`, {
+        method: "DELETE",
+        headers: {
+          "Authorization": `Bearer ${user.token}`,
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      await fetchTransactions(); 
+    } catch (error) {
+      console.error("Error deleting transaction:", error);
+    }
   };
 
+  
+  const filteredTransactions = transactions.filter((transaction) => {
+    if (filters.type !== "All" && transaction.type !== filters.type) {
+      return false;
+    }
+
+    const transactionDate = new Date(transaction.date);
+    const now = new Date();
+    const timeRange = parseInt(filters.frequency, 10); 
+
+    const daysDifference = Math.floor((now - transactionDate) / (1000 * 60 * 60 * 24));
+    return daysDifference <= timeRange;
+  });
+  
+  
   return (
-    <>
-      <div className="container">
-        <div className="top-section">
-          <button className="button filter-btn" onClick={toggleFilters}>
-            <FaFilter /> Filters
-          </button>
-          <button className="button add-new-btn" onClick={() => toggleForm()}>
-            <FaPlus /> Add New
-          </button>
-        </div>
-
-        {/* Transaction Form */}
-{showForm && (
-  <div className="form-container">
-    {/* Close Button (Red X) */}
-    <button className="close-icon" onClick={() => setShowForm(false)}>
-      <FaTimes />
-    </button>
-
-    <h3>{editingIndex !== null ? "Edit Transaction" : "Add New Transaction"}</h3>
-    <input type="date" name="date" value={newTransaction.date} onChange={handleInputChange} placeholder="Date" />
-    <input type="text" name="title" value={newTransaction.title} onChange={handleInputChange} placeholder="Title" />
-    <input type="text" name="amount" value={newTransaction.amount} onChange={handleInputChange} placeholder="Amount" />
-    <select name="type" value={newTransaction.type} onChange={handleInputChange}>
-      <option>Expense</option>
-      <option>Income</option>
-    </select>
-    <input type="text" name="category" value={newTransaction.category} onChange={handleInputChange} placeholder="Category" />
-    <div className="form-buttons">
-      <button className="button add-btn" onClick={handleAddTransaction}>
-        {editingIndex !== null ? "Save" : "Add"}
-      </button>
-    </div>
-  </div>
-)}
-
-
-        {showFilters && (
-          <div className="filter-section">
-            <label>Select Frequency:</label>
-            <select>
-              <option>Last Week</option>
-              <option>Last Month</option>
-            </select>
-            
-            <label>Type:</label>
-            <select>
-              <option>All</option>
-              <option>Income</option>
-              <option>Expense</option>
-            </select>
-            
-            <button className="button danger" onClick={toggleFilters}>Close</button>
-          </div>
-        )}
-
-        <div className="table-container">
-          <table>
-            <thead>
-              <tr>
-                <th>Date</th>
-                <th>Title</th>
-                <th>Amount</th>
-                <th>Type</th>
-                <th>Category</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {transactions.map((transaction, index) => (
-                <tr key={transaction.id}>
-                  <td>{transaction.date}</td>
-                  <td>{transaction.title}</td>
-                  <td>{transaction.amount}</td>
-                  <td>{transaction.type}</td>
-                  <td>{transaction.category}</td>
-                  <td className="action-buttons">
-                    <button onClick={() => toggleForm(index)}>
-                      <FaEdit />
-                    </button>
-                    <button onClick={() => handleDeleteTransaction(index)}>
-                      <FaTrash />
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+    <div style={dashboardStyle}>
+      <div style={buttonContainerStyle}>
+        <button onClick={() => setShowFilters(!showFilters)} style={filterButtonStyle}>
+          <FaFilter /> Filters
+        </button>
+        <button onClick={() => { setEditingTransaction(null); setShowForm(true); }} style={addButtonStyle}>
+          <FaPlus /> Add New
+        </button>
+        <button onClick={() => navigate("/charts")} style={chartsButtonStyle}>
+          <FaChartLine /> Charts
+        </button>
       </div>
-    </>
+
+      {showFilters && <Filters filters={filters} setFilters={setFilters} />}
+
+      
+      {showForm && (
+        <TransactionForm
+          transaction={editingTransaction}
+          fetchTransactions={fetchTransactions}
+          onSave={handleAddOrUpdateTransaction}
+          closeForm={() => { setShowForm(false); setEditingTransaction(null); }}
+        />
+      )}
+
+      <TransactionsTable
+        transactions={filteredTransactions}
+        onEdit={(transaction) => { setEditingTransaction(transaction); setShowForm(true); }}
+        onDelete={handleDeleteTransaction}
+      />
+    </div>
   );
 };
+
+const dashboardStyle = {
+  padding: "20px",
+  background: "#F8F9FA",
+  minHeight: "100vh",
+};
+
+const buttonContainerStyle = {
+  display: "flex",
+  justifyContent: "space-between",
+  marginBottom: "20px",
+};
+
+const filterButtonStyle = {
+  backgroundColor: "#4CAF50",
+  color: "white",
+  border: "none",
+  padding: "10px 15px",
+  borderRadius: "5px",
+  cursor: "pointer",
+  fontWeight: "bold",
+  display: "flex",
+  alignItems: "center",
+  gap: "8px",
+};
+
+const addButtonStyle = {
+  backgroundColor: "#007BFF",
+  color: "white",
+  border: "none",
+  padding: "10px 15px",
+  borderRadius: "5px",
+  cursor: "pointer",
+  fontWeight: "bold",
+  display: "flex",
+  alignItems: "center",
+  gap: "8px",
+};
+
+const chartsButtonStyle = {
+  backgroundColor: "#FFA500",
+  color: "white",
+  border: "none",
+  padding: "10px 15px",
+  borderRadius: "5px",
+  cursor: "pointer",
+  fontWeight: "bold",
+  display: "flex",
+  alignItems: "center",
+  gap: "8px",
+};
+
+const resetButtonStyle = {
+  backgroundColor: "#FF4D4D",
+  color: "white",
+  border: "none",
+  padding: "10px 15px",
+  borderRadius: "5px",
+  cursor: "pointer",
+  fontWeight: "bold",
+  display: "flex",
+  alignItems: "center",
+  gap: "8px",
+};
+
 
 export default Dashboard;

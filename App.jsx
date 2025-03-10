@@ -5,6 +5,7 @@ import Footer from "./components/Footer";
 import Dashboard from "./pages/Dashboard";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
+import ChartsPage from "./pages/ChartsPage";
 
 const App = () => {
   const [user, setUser] = useState(null);
@@ -20,10 +21,11 @@ const App = () => {
     <Router>
       <Navbar user={user} setUser={setUser} />
       <Routes>
-        <Route path="/" element={user ? <Dashboard /> : <Navigate to="/login" />} />
-        <Route path="/dashboard" element={user ? <Dashboard /> : <Navigate to="/login" />} />
-        <Route path="/login" element={<LoginPage setUser={setUser} />} />
-        <Route path="/signup" element={<SignupPage />} />
+        <Route path="/" element={user ? <Navigate to="/dashboard" /> : <Navigate to="/login" />} />
+        <Route path="/dashboard" element={user ? <Dashboard user={user} /> : <Navigate to="/login" />} />
+        <Route path="/login" element={user ? <Navigate to="/dashboard" /> : <LoginPage setUser={setUser} />} />
+        <Route path="/signup" element={user ? <Navigate to="/dashboard" /> : <SignupPage />} />
+        <Route path="/charts" element={user ? <ChartsPage /> : <Navigate to="/login" />} />
       </Routes>
       <Footer />
     </Router>

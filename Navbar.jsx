@@ -5,29 +5,58 @@ const Navbar = ({ user, setUser }) => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    localStorage.removeItem("user"); // Remove user from local storage
-    setUser(null); // Reset user state
-    navigate("/login"); // Redirect to login page
+    localStorage.removeItem("user"); 
+    setUser(null); 
+    setTimeout(() => {
+      navigate("/"); 
+    }, 0);
   };
 
   return (
-    <nav className="navbar">
-      <h2>Personal Expense Manager</h2>
-      <div className="nav-links">
+    <nav style={styles.navbar}>
+      <h2 style={styles.welcomeText}>
+        {user ? `Welcome, ${user.name}!` : "Personal Expense Manager"}
+      </h2>
+
+      <div style={styles.navLinks}>
+  
+
         {!user ? (
           <>
-            <Link to="/login">Login</Link>
-            <Link to="/signup">Signup</Link>
+            <Link to="/login" style={styles.link}>Login</Link>
+            <Link to="/signup" style={styles.link}>Signup</Link>
           </>
         ) : (
           <>
-            <span className="username">Welcome, {user.name}!</span>
-            <button className="logout-btn" onClick={handleLogout}>Logout</button>
+            <button style={styles.logoutBtn} onClick={handleLogout}>Logout</button>
           </>
         )}
       </div>
     </nav>
   );
+};
+
+const styles = {
+  navbar: { 
+    background: "#E4DCCF", 
+    padding: "15px 30px", 
+    display: "flex", 
+    justifyContent: "space-between", 
+    alignItems: "center", 
+    borderRadius: "10px" 
+  },
+  welcomeText: { fontWeight: "bold", color: "#5C5470", margin: 0 },
+  navLinks: { display: "flex", alignItems: "center", gap: "15px" },
+  link: { textDecoration: "none", color: "#5C5470", fontWeight: "bold" },
+  logoutBtn: { 
+    background: "#FF4D4D", 
+    border: "none", 
+    padding: "8px 14px", 
+    color: "white", 
+    borderRadius: "8px", 
+    cursor: "pointer",
+    fontWeight: "bold"
+  },
 };
 
 export default Navbar;

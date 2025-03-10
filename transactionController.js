@@ -1,24 +1,44 @@
-import Transaction from "../models/TransactionModel.js";
+import Transaction from "../models/Transaction.js";
 
-// Add Transaction
+// ✅ Add transaction function
 export const addTransaction = async (req, res) => {
-  const { type, amount, category, description, date } = req.body;
+  try {
+    console.log("Received request:", req.body);
 
-  const transaction = new Transaction({
-    user: req.user.id,
-    type,
-    amount,
-    category,
-    description,
-    date,
-  });
+    const { date, title, amount, type, category } = req.body;
 
-  const savedTransaction = await transaction.save();
-  res.status(201).json(savedTransaction);
+    if (!date || !title || !amount || !type || !category) {
+      return res.status(400).json({ message: "All fields are required" });
+    }
+
+    if (isNaN(amount)) {
+      return res.status(400).json({ message: "Amount must be a number" });
+    }
+
+    const transaction = new Transaction({
+      user: req.user._id,
+      date,
+      title,
+      amount,
+      type,
+      category,
+    });
+
+    const savedTransaction = await transaction.save();
+    res.status(201).json(savedTransaction);
+  } catch (error) {
+    console.error("🚨 Backend Error:", error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
 };
 
-// Get Transactions for a User
+// ✅ Fetch transactions function
 export const getTransactions = async (req, res) => {
-  const transactions = await Transaction.find({ user: req.user.id }).sort({ date: -1 });
-  res.json(transactions);
+  try {
+    const transactions = await Transaction.find({ user: req.user._id });
+    res.status(200).json(transactions);
+  } catch (error) {
+    console.error("🚨 Backend Error:", error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
 };

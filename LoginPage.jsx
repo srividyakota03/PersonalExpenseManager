@@ -25,12 +25,8 @@ const LoginPage = ({ setUser }) => {
         throw new Error(data.message || "Login failed");
       }
 
-      // Save user info in local storage
       localStorage.setItem("user", JSON.stringify(data));
-
-      // Set user in state
       setUser(data);
-
       navigate("/dashboard");
     } catch (error) {
       setError(error.message);
@@ -38,22 +34,122 @@ const LoginPage = ({ setUser }) => {
   };
 
   return (
-    <div className="auth-container">
-      <h2>Login</h2>
-      {error && <p className="error-message">{error}</p>}
-      <form onSubmit={handleLogin}>
-        <input type="email" placeholder="Email" onChange={(e) => setEmail(e.target.value)} required />
-        <input type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} required />
-        <button type="submit">Login</button>
-      </form>
-      <p>
-        Don't have an account?{" "}
-        <span onClick={() => navigate("/signup")} className="link">
-          Sign Up
-        </span>
-      </p>
+    <div style={styles.container}>
+      <div style={styles.card}>
+        <h2 style={styles.heading}>Smart Spending Starts Here!</h2>
+        <p style={styles.tagline}>Login to Your Account</p>
+
+        {error && <p style={styles.errorMessage}>{error}</p>}
+
+        <form onSubmit={handleLogin} style={styles.form}>
+          <input 
+            type="email" 
+            placeholder="Email" 
+            onChange={(e) => setEmail(e.target.value)} 
+            required 
+            style={styles.input}
+          />
+          <input 
+            type="password" 
+            placeholder="Password" 
+            onChange={(e) => setPassword(e.target.value)} 
+            required 
+            style={styles.input}
+          />
+          <button type="submit" style={styles.button}>Login</button>
+        </form>
+
+        <p style={styles.signupText}>
+          Don't have an account?{" "}
+          <span onClick={() => navigate("/signup")} style={styles.link}>
+            Sign Up
+          </span>
+        </p>
+      </div>
     </div>
   );
 };
+
+const styles = {
+  container: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    height: "100vh",
+    background: "#FFF6E0", 
+  },
+  card: {
+    background: "white",
+    padding: "40px",
+    borderRadius: "12px",
+    boxShadow: "0px 8px 20px rgba(0, 0, 0, 0.15)",
+    textAlign: "center",
+    width: "400px", 
+  },
+  heading: {
+    fontSize: "22px", 
+    color: "#5C5470",
+    marginBottom: "8px", 
+    fontWeight: "bold",
+    whiteSpace: "nowrap", 
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+  },
+  tagline: {
+    fontSize: "15px", 
+    color: "#666",
+    marginBottom: "20px",
+    fontStyle: "italic",
+  },
+  tagline: {
+    fontSize: "16px",
+    color: "#666",
+    marginBottom: "20px",
+    fontStyle: "italic",
+  },
+  errorMessage: {
+    color: "red",
+    fontSize: "14px",
+    marginBottom: "15px",
+  },
+  form: {
+    display: "flex",
+    flexDirection: "column",
+  },
+  input: {
+    padding: "10px",
+    margin: "8px 0",
+    border: "1px solid #ccc",
+    borderRadius: "5px",
+    fontSize: "16px",
+    outline: "none",
+  },
+  button: {
+    padding: "12px",
+    background: "#5C5470",
+    color: "white",
+    fontSize: "16px",
+    fontWeight: "bold",
+    border: "none",
+    borderRadius: "5px",
+    cursor: "pointer",
+    marginTop: "10px",
+    transition: "0.3s",
+  },
+  buttonHover: {
+    background: "#40394A",
+  },
+  signupText: {
+    marginTop: "15px",
+    fontSize: "14px",
+    color: "#666",
+  },
+  link: {
+    color: "#5C5470",
+    fontWeight: "bold",
+    cursor: "pointer",
+  },
+};
+
 
 export default LoginPage;
